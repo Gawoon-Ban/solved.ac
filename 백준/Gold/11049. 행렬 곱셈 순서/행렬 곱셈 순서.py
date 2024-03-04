@@ -16,21 +16,22 @@ dp[i][j]  = i~j 사이에 있는 k로 잘라. 그리고 그 둘을 곱할 때 �
 N = int(input())
 INF = 2**31
 dp = [[0 for _ in range(N)] for _ in range(N)]
-matrix = list(list(map(int,input().split())) for _ in range(N))
+mat = []
+a,b = map(int,input().split())
+mat.append(a)
+mat.append(b)
+for _ in range(1,N):
+    a,b = map(int,input().split())
+    mat.append(b)
 
 for gap in range(1,N):
     for j in range(N-gap):
         row = j
         col = j + gap
         if gap == 1:
-            dp[row][col] = matrix[row][0] * matrix[row][1] * matrix[col][1]
+            dp[row][col] = mat[row-1] * mat[row] * mat[row+1]
             continue
-        """
-        if gap == 2:
-            dp[row][col] = min(dp[row][col-1] + matrix[row][0] * matrix[col-1][1] * matrix[col][1],dp[row+1][col] + matrix[row][0] * matrix[row+1][0] * matrix[col][1])
-            continue
-        """
         dp[row][col] = INF
         for k in range(row,col):
-            dp[row][col] = min(dp[row][col], dp[row][k]+ dp[k+1][col] + matrix[row][0] * matrix[k][1]* matrix[col][1])
+            dp[row][col] = min(dp[row][col], dp[row][k]+ dp[k+1][col] + mat[row-1] * mat[k]* mat[col])
 print(dp[0][N-1])

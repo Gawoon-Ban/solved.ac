@@ -1,7 +1,7 @@
 import io,os,sys
 input = io.BytesIO(os.read(0, os.fstat(0).st_size)).readline
 #input = sys.stdin.readline
-
+write = sys.stdout.write
 """
 백준 1197 최소 스패닝 트리
 
@@ -29,4 +29,4 @@ for a,b,c in graph:
         cnt += 1
     if cnt == v-1:
         break
-print(answer)
+write(str(answer))

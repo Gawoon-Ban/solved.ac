@@ -5,7 +5,7 @@ n = int(input())
 pair = []
 for _ in range(n):
     a, b = map(int, input().split())
-    pair.append([a,b])
+    pair.append((a,b))
 pair.sort(key=lambda x: (x[0], x[1]))
 ind = 0
 next = 1

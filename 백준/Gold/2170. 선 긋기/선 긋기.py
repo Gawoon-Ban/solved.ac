@@ -2,19 +2,28 @@ import sys
 input = sys.stdin.readline
 
 n = int(input())
-pair = []
-for _ in range(n):
-    a, b = map(int, input().split())
-    pair.append((a,b))
-pair.sort(key=lambda x: (x[0], x[1]))
-result = 0
-start, end = pair[0]
-for i in range(1, len(pair)):
-    if end < pair[i][0]:
-        result += end-start
-        start, end = pair[i]
+lines = [list(map(int, input().split()))]
+for _ in range(n-1):
+    start, end = map(int, input().split())
+    for i in range(len(lines)):
+        if lines[i][0] <= start <= lines[i][1] or lines[i][0] <= end <= lines[i][1]:
+            if lines[i][0] > start:
+                lines[i][0] = start
+            elif lines[i][1] < end:
+                lines[i][1] = end
+            break
     else:
-        end = max(end, pair[i][1])
+        lines.append([start, end])
+lines.sort()
+
+result = 0
+start, end = lines[0]
+for i in range(1, len(lines)):
+    if end < lines[i][0]:
+        result += end-start
+        start, end = lines[i]
+    else:
+        end = max(end, lines[i][1])
 result += end-start
 
 print(result)
